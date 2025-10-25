@@ -1,36 +1,49 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HRidoy TV</title>
-<link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet" />
-<style>
-body { margin:0; background:#000; display:flex; justify-content:center; align-items:center; height:100vh; }
-.video-js { width:100%; max-width:640px; height:auto; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure HLS Player</title>
+  <style>
+    body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
+    #player { width: 100%; max-width: 800px; aspect-ratio: 16/9; background: #111; }
+  </style>
 </head>
 <body>
+  <h2>Secure Stream</h2>
+  <video id="player" controls autoplay muted playsinline></video>
+  <p id="status">Loading stream...</p>
 
-<video id="video" class="video-js vjs-default-skin" controls autoplay></video>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('player');
+    const status = document.getElementById('status');
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
-<script>
-const video = document.getElementById('video');
-const manifest = "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8";
+    // API থেকে প্রক্সি ইউআরএল নিন
+    fetch('/api/stream')
+      .then(res => res.json())
+      .then(data => {
+        const proxyUrl = data.streamUrl;
+        status.textContent = 'Playing...';
 
-if (Hls.isSupported()) {
-  const hls = new Hls();
-  hls.loadSource(manifest);
-  hls.attachMedia(video);
-  hls.on(Hls.Events.MANIFEST_PARSED, function() {
-    video.play();
-  });
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-  video.src = manifest;
-}
-</script>
-
+        if (Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(proxyUrl);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            video.play().catch(e => console.log("Autoplay blocked"));
+          });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = proxyUrl;
+          video.addEventListener('loadedmetadata', () => video.play());
+        } else {
+          status.textContent = 'HLS not supported.';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        status.textContent = 'Failed to load stream.';
+      });
+  </script>
 </body>
 </html>
