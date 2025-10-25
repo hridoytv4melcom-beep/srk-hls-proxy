@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Hridoy TV Demo</title>
+<meta charset="utf-8" />
+<title>HRidoy TV</title>
 <link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet" />
-<style>
-body { margin:0; background:#000; }
-.video-js { width:100%; height:100vh; }
-</style>
+<style>body{margin:0;background:#000}.video-js{width:100%;height:100vh}</style>
 </head>
 <body>
-
-<video id="video" class="video-js vjs-default-skin" controls autoplay>
-</video>
+<video id="video" class="video-js vjs-default-skin" controls></video>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
 <script>
 const video = document.getElementById('video');
-// Free HLS demo URL (CORS + HTTPS enabled)
-const manifest = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+// **এখানে কোনো origin m3u8 নেই** — শুধুই proxy endpoint
+const manifest = '/api/stream';  // কোনো query param নেই — সার্ভার ভিতরেই origin আছে
 
-if(Hls.isSupported()) {
+if (Hls.isSupported()) {
   const hls = new Hls();
   hls.loadSource(manifest);
   hls.attachMedia(video);
   hls.on(Hls.Events.MANIFEST_PARSED, function() {
-    video.play();
+    // autoplay may be blocked on mobile; user can press play
+    // video.play();
   });
-} else if(video.canPlayType('application/vnd.apple.mpegurl')) {
+} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
   video.src = manifest;
 }
 </script>
-
 </body>
 </html>
