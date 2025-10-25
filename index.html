@@ -18,8 +18,7 @@ body { margin:0; background:#000; }
 <script>
 const video = document.getElementById('video');
 
-// **origin URL hidden** — শুধু proxy URL
-const manifest = '/api/stream.js';
+const manifest = '/api/stream';
 
 if (Hls.isSupported()) {
   const hls = new Hls();
