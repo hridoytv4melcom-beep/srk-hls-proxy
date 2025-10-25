@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hridoy TV Player</title>
+<title>Hridoy TV Demo</title>
 <link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet" />
 <style>
 body { margin:0; background:#000; }
@@ -11,15 +11,15 @@ body { margin:0; background:#000; }
 </head>
 <body>
 
-<video id="video" class="video-js vjs-default-skin" controls autoplay></video>
+<video id="video" class="video-js vjs-default-skin" controls autoplay>
+</video>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
 <script>
 const video = document.getElementById('video');
-
-// Proxy URL
-const manifest = '/api/stream?url=https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8';
+// Free HLS demo URL (CORS + HTTPS enabled)
+const manifest = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
 if(Hls.isSupported()) {
   const hls = new Hls();
