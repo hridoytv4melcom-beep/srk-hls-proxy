@@ -1,16 +1,17 @@
-// api/stream.js
 import fetch from "node-fetch";
 
-// আপনার origin m3u8 লিংক এখানে রাখুন
 const ORIGIN_M3U8 = "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8";
 
 export default async function handler(req, res) {
   try {
     if (req.query.segment) {
-      // segment fetch
       const segUrl = decodeURIComponent(req.query.segment);
       const segRes = await fetch(segUrl, {
-        headers: { "User-Agent": "Mozilla/5.0", "Origin": "https://srknowapp.ncare.live", "Referer": "https://srknowapp.ncare.live/" }
+        headers: { 
+          "User-Agent": "Mozilla/5.0",
+          "Origin": "https://srknowapp.ncare.live",
+          "Referer": "https://srknowapp.ncare.live/"
+        }
       });
       const buf = await segRes.arrayBuffer();
       res.setHeader("Content-Type", segRes.headers.get("content-type") || "video/mp2t");
@@ -18,14 +19,16 @@ export default async function handler(req, res) {
       return res.send(Buffer.from(buf));
     }
 
-    // main m3u8 fetch
     const response = await fetch(ORIGIN_M3U8, {
-      headers: { "User-Agent": "Mozilla/5.0", "Origin": "https://srknowapp.ncare.live", "Referer": "https://srknowapp.ncare.live/" }
+      headers: { 
+        "User-Agent": "Mozilla/5.0",
+        "Origin": "https://srknowapp.ncare.live",
+        "Referer": "https://srknowapp.ncare.live/"
+      }
     });
 
     let text = await response.text();
 
-    // সব segment URL proxy route দিয়ে রিরাইট
     text = text.replace(/https?:\/\/[^\r\n]+/g, (m) =>
       `/api/stream?segment=${encodeURIComponent(m)}`
     );
