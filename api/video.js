@@ -1,7 +1,7 @@
 // api/video.js
 export default async function handler(req, res) {
   // ORIGINAL playlist URL (তুমি দিলে)
-  const originalUrl = "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8";
+  const originalUrl = "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8";
 
   try {
     const fetched = await fetch(originalUrl);
