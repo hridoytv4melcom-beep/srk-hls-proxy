@@ -21,62 +21,56 @@
 
     .site-header {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .site-header h1 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: #ff6f61;
-      text-shadow: 0 0 8px rgba(255, 111, 97, 0.4);
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
+      width: 100%;
     }
 
     .player-wrap {
-      position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
+      max-width: 100%;
+      aspect-ratio: 16 / 9; /* সবসময় ল্যান্ডস্কেপ */
       background: #000;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     }
 
     #video {
       width: 100%;
       height: 100%;
       display: block;
-      background: #000;
       object-fit: contain;
+      background: #000;
     }
 
     .hint {
       text-align: center;
       margin-top: 1rem;
-      font-size: 0.95rem;
-      color: #aaa;
-      padding: 0.5rem;
+      font-size: 0.9rem;
+      color: #bbb;
+      padding: 0.6rem;
       background: rgba(30, 30, 40, 0.6);
       border-radius: 8px;
+      line-height: 1.4;
     }
 
-    /* মোবাইল ফ্রেন্ডলি রেসপনসিভ */
+    /* মোবাইলে ফন্ট ও প্যাডিং অপ্টিমাইজ */
     @media (max-width: 600px) {
       .site-header h1 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
       }
-
-      .player-wrap {
-        aspect-ratio: 9 / 16; /* মোবাইলে ভার্টিকাল ভিউ পছন্দ করলে */
-        /* অথবা রাখতে পারেন 16/9 — নিচের লাইন আনকমেন্ট করুন */
-        /* aspect-ratio: 16 / 9; */
-      }
-
       body {
-        padding: 0.5rem;
+        padding: 0.75rem;
       }
     }
   </style>
@@ -97,32 +91,19 @@
     </p>
   </main>
 
-  <!-- hls.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.1/dist/hls.min.js"></script>
   <script>
-    async function initPlayer() {
+    function initPlayer() {
       const video = document.getElementById('video');
       const playlistUrl = '/api/video';
 
       if (window.Hls && Hls.isSupported()) {
-        const hls = new Hls({
-          // আপনার পছন্দ অনুযায়ী: স্মুথ প্রি-লোডিং ও পারফরম্যান্স অপ্টিমাইজেশন
-          autoStartLoad: true,
-          startPosition: -1, // শেষ থেকে নয়, শুরু থেকে
-        });
+        const hls = new Hls({ autoStartLoad: true });
         hls.loadSource(playlistUrl);
         hls.attachMedia(video);
-
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          // ভিডিও অটো-প্লে না করে, শুধু প্রস্তুত রাখা
-          console.log('Manifest loaded. Ready to play.');
-        });
-
         hls.on(Hls.Events.ERROR, (event, data) => {
           console.error('HLS Error:', data);
-          if (data.fatal) {
-            hls.destroy();
-          }
+          if (data.fatal) hls.destroy();
         });
       } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = playlistUrl;
@@ -131,7 +112,6 @@
       }
     }
 
-    // পেজ লোড হলে প্লেয়ার ইনিশিয়ালাইজ করুন
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initPlayer);
     } else {
