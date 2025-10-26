@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
     // 🔒 এখানে অরিজিনাল m3u8 লিংক
-    const url = "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8";
+    const url = "https://d2vnbkvjbims7j.cloudfront.net/containerA/LTN/playlist_4300k.m3u8";
 
     // অরিজিনাল playlist ফেচ করা
     const response = await fetch(url);
