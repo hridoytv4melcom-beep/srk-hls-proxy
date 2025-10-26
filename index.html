@@ -1,21 +1,100 @@
-Carotoonrotoondoctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cartoon Channel — Secure Player</title>
-  <link rel="stylesheet" href="/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f15;
+      color: #fff;
+      line-height: 1.6;
+      padding: 1rem;
+    }
+
+    .site-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .site-header h1 {
+      font-size: 1.8rem;
+      color: #ff6f61;
+      text-shadow: 0 0 8px rgba(255, 111, 97, 0.4);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .player-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .hint {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #aaa;
+      padding: 0.5rem;
+      background: rgba(30, 30, 40, 0.6);
+      border-radius: 8px;
+    }
+
+    /* মোবাইল ফ্রেন্ডলি রেসপনসিভ */
+    @media (max-width: 600px) {
+      .site-header h1 {
+        font-size: 1.4rem;
+      }
+
+      .player-wrap {
+        aspect-ratio: 9 / 16; /* মোবাইলে ভার্টিকাল ভিউ পছন্দ করলে */
+        /* অথবা রাখতে পারেন 16/9 — নিচের লাইন আনকমেন্ট করুন */
+        /* aspect-ratio: 16 / 9; */
+      }
+
+      body {
+        padding: 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
-    <Chann666rotoon Channel</h1>
-  </headeChannelr-wrap <main class="container">
+    <h1>Cartoon Channel</h1>
+  </header>
+
+  <main class="container">
     <div class="player-wrap">
-      <video id="video" controls playsinline width="800" poster="">
-        Your browser does not support HTML5 video.
+      <video id="video" controls playsinline poster="" preload="auto">
+        আপনার ব্রাউজার HTML5 ভিডিও সাপোর্ট করে না।
       </video>
     </div>
-    <p class="hint">এই প্লেয়ারটি সার্ভার-প্রক্সি ব্যবহার করে কন্টেন্ট লোড করে — আসল m3u8 লিংক গোপন রাখা আছে।</p>
+    <p class="hint">
+      এই প্লেয়ারটি সার্ভার-প্রক্সি ব্যবহার করে কন্টেন্ট লোড করে — আসল m3u8 লিংক গোপন রাখা আছে।
+    </p>
   </main>
 
   <!-- hls.js CDN -->
@@ -23,18 +102,27 @@ Carotoonrotoondoctype html>
   <script>
     async function initPlayer() {
       const video = document.getElementById('video');
-      // এখানে টোকেন নাই — সরাসরি our proxy route ব্যবহার করতে হবে
       const playlistUrl = '/api/video';
 
       if (window.Hls && Hls.isSupported()) {
-        const hls = new Hls();
+        const hls = new Hls({
+          // আপনার পছন্দ অনুযায়ী: স্মুথ প্রি-লোডিং ও পারফরম্যান্স অপ্টিমাইজেশন
+          autoStartLoad: true,
+          startPosition: -1, // শেষ থেকে নয়, শুরু থেকে
+        });
         hls.loadSource(playlistUrl);
         hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          // optional: video.play();
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          // ভিডিও অটো-প্লে না করে, শুধু প্রস্তুত রাখা
+          console.log('Manifest loaded. Ready to play.');
         });
-        hls.on(Hls.Events.ERROR, function(event, data) {
-          console.error('HLS error', event, data);
+
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          console.error('HLS Error:', data);
+          if (data.fatal) {
+            hls.destroy();
+          }
         });
       } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = playlistUrl;
@@ -43,7 +131,12 @@ Carotoonrotoondoctype html>
       }
     }
 
-    initPlayer();
+    // পেজ লোড হলে প্লেয়ার ইনিশিয়ালাইজ করুন
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPlayer);
+    } else {
+      initPlayer();
+    }
   </script>
 </body>
 </html>
