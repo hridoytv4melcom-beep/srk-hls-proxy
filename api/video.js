@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   // ✅ চ্যানেল ম্যাপিং — আপনার দেওয়া m3u8 লিংকগুলো
   const channelMap = {
     sony_aath: 'https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8',
-    srk_tv: 'https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8',
+    srk_tv3330: 'https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8',
     bbc_news: 'https://d2vnbkvjbims7j.cloudfront.net/containerA/LTN/playlist_4300k.m3u8'
   };
 
