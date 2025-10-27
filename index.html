@@ -25,7 +25,7 @@
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
-      padding: 0.8rem 1rem 1.5rem;
+      padding: 0.8rem 1rem 2rem;
     }
 
     @keyframes bgMove {
@@ -34,7 +34,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* 🔝 হেডার টেক্সট */
+    /* 🔝 Header Link */
     .top-link {
       font-size: 1.05rem;
       color: #00b34a;
@@ -93,6 +93,13 @@
       object-fit: cover;
       margin-bottom: 0.6rem;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      border: 3px solid #00e676;
+      animation: ringGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes ringGlow {
+      from { box-shadow: 0 0 8px rgba(0, 230, 118, 0.4); }
+      to { box-shadow: 0 0 18px rgba(0, 230, 118, 0.8); }
     }
 
     .logo {
@@ -113,7 +120,14 @@
     .tagline {
       font-size: 1rem;
       color: #444;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .subnote {
+      font-size: 0.9rem;
+      color: #00964b;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
     }
 
     .cta-box {
@@ -128,7 +142,11 @@
       font-size: 0.95rem;
       color: #222;
       margin-bottom: 1rem;
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+
+    .cta-title strong {
+      color: #00b34a;
     }
 
     .cta-link {
@@ -157,10 +175,21 @@
     }
 
     .footer {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       text-align: center;
       color: #555;
       font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .footer a {
+      color: #00a548;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
     }
 
     @media (max-width: 480px) {
@@ -178,12 +207,15 @@
     <img src="https://i.ibb.co.com/YCvJrrT/In-Shot-20251015-113151893.jpg" alt="HridoyTV Logo" class="logo-img">
     <h1 class="logo">HridoyTV</h1>
     <p class="tagline">The Home of Live TV</p>
+    <p class="subnote">🌐 এটি <strong>HridoyTV.4mel.com</strong> এর অংশ — বাংলাদেশের প্রথম HD মানের লাইভ স্ট্রিম প্ল্যাটফর্ম 💚</p>
 
     <div class="cta-box">
       <h2 class="cta-title">
-        🌍 HD মানের লাইভ স্ট্রিম, দ্রুত লোডিং অভিজ্ঞতার জন্য এখনই দেখুন —  
-        আপনার পছন্দের সব চ্যানেল এক জায়গায়! 📺✨  
-        <br><br>🎬 খবর, খেলা, বিনোদন, কার্টুন ও মুভি — এক ক্লিকে দেখুন 👇
+        🎥 <strong>HD মানের লাইভ স্ট্রিম</strong> উপভোগ করুন —  
+        দ্রুত লোডিং ও বিফার-মুক্ত দেখার অভিজ্ঞতা এখন আপনার হাতের মুঠোয়! 📱💫  
+        <br><br>
+        🔹 <strong>খবর, খেলা, বিনোদন, কার্টুন ও মুভি</strong> —  
+        এক জায়গায়, এক ক্লিকে!  
       </h2>
       <a href="https://hridoytv.4mel.com" class="cta-link" target="_blank" rel="noopener">
         ▶ এখনই দেখুন
@@ -192,7 +224,8 @@
   </div>
 
   <div class="footer">
-    <p>© 2025 HridoyTV — Secure & Private Streaming</p>
+    <p>© 2025 <strong>HridoyTV</strong> — Secure • Fast • HD Streaming<br>
+    Designed with 💚 by Hridoy</p>
   </div>
 </body>
 </html>
