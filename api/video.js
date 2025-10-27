@@ -1,61 +1,54 @@
+// api/video.js
 export default async function handler(req, res) {
-  // 🎯 এখানে তোমার অরিজিনাল M3U8 URL দাও
-  const originalUrl = "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8";
+  const { channel } = req.query;
+
+  if (!channel) {
+    return res.status(400).send('Missing channel');
+  }
+
+  // চ্যানেল ম্যাপিং — আপনার দেওয়া m3u8 লিংকগুলো
+  const channelMap = {
+    sony_aath: 'https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8',
+    srk_tv: 'https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8',
+    bbc_news: 'https://d2vnbkvjbims7j.cloudfront.net/containerA/LTN/playlist_4300k.m3u8'
+  };
+
+  const targetUrl = channelMap[channel];
+  if (!targetUrl) {
+    return res.status(404).send('Channel not found');
+  }
 
   try {
-    // 🔥 Header সহ ফেচ (CORS বাইপাসে সহায়ক)
-    const fetched = await fetch(originalUrl, {
+    const response = await fetch(targetUrl, {
       headers: {
-        "User-Agent": "Mozilla/5.0",
-        "Origin": "https://srk-hls-proxy.vercel.app"
+        'User-Agent': 'Mozilla/5.0 (HLS Proxy)',
+        'Referer': 'https://srk-hls-proxy.vercel.app/'
       }
     });
 
-    if (!fetched.ok) {
-      res.status(502).send("Bad gateway fetching playlist");
-      return;
+    if (!response.ok) {
+      console.error(`Failed to fetch m3u8 for ${channel}:`, response.status);
+      return res.status(502).send('Upstream error');
     }
 
-    let playlist = await fetched.text();
+    let m3u8Text = await response.text();
 
-    // 🔁 Absolute URL (https://...) কে proxy segment এ রিরাইট
-    playlist = playlist.replace(
-      /(https?:\/\/[^\s\n\r",]+)/g,
-      (match) =>
-        `https://srk-hls-proxy.vercel.app/api/segment?u=${encodeURIComponent(match)}`
+    // ✨ সেগমেন্ট URL গুলোকে /api/segment এ রিওয়াইট করুন
+    // (যদি সেগমেন্টগুলো আলাদা ডোমেইনে থাকে)
+    const baseUrl = new URL(targetUrl).origin + new URL(targetUrl).pathname.replace(/[^/]*$/, '');
+    m3u8Text = m3u8Text.replace(
+      new RegExp(`(?!\\/)([^\\n\\r"]+\\.(?:ts|m4s|mp4))`, 'g'),
+      (match) => {
+        const segUrl = new URL(match, baseUrl).href;
+        return `/api/segment?url=${encodeURIComponent(segUrl)}`;
+      }
     );
 
-    // 🧩 Relative URL (segment.ts, বা sub/segment.ts ইত্যাদি) ঠিক করা
-    try {
-      const base = new URL(originalUrl);
-      const originBase =
-        base.origin + base.pathname.substring(0, base.pathname.lastIndexOf("/") + 1);
-
-      playlist = playlist
-        .split(/\r?\n/)
-        .map((line) => {
-          if (!line || line.startsWith("#")) return line;
-          const trimmed = line.trim();
-          if (trimmed.startsWith("/api/segment")) return trimmed;
-          if (/^https?:\/\//i.test(trimmed)) return trimmed;
-          const absolute = trimmed.startsWith("/")
-            ? base.origin + trimmed
-            : originBase + trimmed;
-          return `https://srk-hls-proxy.vercel.app/api/segment?u=${encodeURIComponent(absolute)}`;
-        })
-        .join("\n");
-    } catch (e) {
-      console.error("Base rewrite error:", e);
-    }
-
-    // 🧠 Cache ও Streaming Hint যোগ করা
-    res.setHeader("Content-Type", "application/vnd.apple.mpegurl");
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
-    res.status(200).send(playlist);
+    res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(m3u8Text);
   } catch (err) {
-    console.error("Proxy error:", err);
-    res.status(500).send("Server error");
+    console.error('video.js error:', err);
+    res.status(500).send('Proxy failed');
   }
 }
