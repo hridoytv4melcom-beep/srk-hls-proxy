@@ -4,9 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HridoyTV — The Home of Live TV</title>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -14,111 +17,177 @@
       box-sizing: border-box;
     }
 
+    /* 🌈 Animated Gradient Background */
     body {
-      background: #000;
-      color: #fff;
+      background: linear-gradient(-45deg, #f0fff4, #ffffff, #f3fff0, #f9fff8);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: #111;
       font-family: 'Noto Sans Bengali', 'Poppins', sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      transition: background 0.5s ease;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .hero {
       text-align: center;
-      max-width: 800px;
-      margin: 2rem auto;
+      max-width: 850px;
+      margin: 3rem auto;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 3rem 2rem;
+      border-radius: 22px;
+      border: 1px solid rgba(0, 200, 83, 0.3);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(0, 200, 83, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glowing border animation */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      padding: 2px;
+      background: linear-gradient(90deg, #00e676, #00c853, #64dd17, #aee571);
+      background-size: 400% 400%;
+      animation: glowBorder 8s linear infinite;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: destination-out;
+    }
+
+    @keyframes glowBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
     .logo {
-      font-size: 3.2rem;
+      font-size: 2.8rem;
       font-weight: 700;
       background: linear-gradient(90deg, #00c853, #64dd17);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
       letter-spacing: -0.5px;
     }
 
     .tagline {
-      font-size: 1.4rem;
-      color: #bbb;
-      margin-bottom: 2.5rem;
-      font-weight: 400;
+      font-size: 1.3rem;
+      color: #444;
+      margin-bottom: 2.2rem;
     }
 
     .cta-box {
-      background: rgba(0, 0, 0, 0.6);
+      background: #f1fff5;
       border: 1px solid #00c853;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 2rem;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 150, 0, 0.2);
-      margin: 2rem 0;
+      box-shadow: 0 8px 25px rgba(0, 200, 83, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .cta-box:hover {
+      transform: translateY(-3px);
     }
 
     .cta-title {
-      font-size: 1.6rem;
-      margin-bottom: 1.2rem;
-      color: #fff;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: #111;
+      line-height: 1.8;
     }
 
+    /* ✨ Animated Button */
     .cta-link {
       display: inline-block;
       background: linear-gradient(90deg, #00c853, #64dd17);
-      color: #000;
-      font-weight: 700;
+      color: #fff;
+      font-weight: 600;
       text-decoration: none;
-      padding: 14px 32px;
+      padding: 14px 36px;
       border-radius: 50px;
       font-size: 1.2rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.4);
+      transition: all 0.35s ease;
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+      position: relative;
+      overflow: hidden;
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(0, 200, 83, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
     }
 
     .cta-link:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 200, 83, 0.6);
-      background: linear-gradient(90deg, #00e676, #aee571);
+      transform: translateY(-3px) scale(1.03);
+      background: linear-gradient(90deg, #00e676, #9cff57);
     }
 
     .footer {
       margin-top: auto;
       text-align: center;
-      color: #666;
+      color: #555;
       font-size: 0.9rem;
       padding-top: 2rem;
     }
 
     @media (max-width: 600px) {
+      .hero {
+        padding: 2rem 1.2rem;
+      }
       .logo {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
       }
       .tagline {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
       .cta-title {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
       }
       .cta-link {
+        font-size: 1rem;
         padding: 12px 24px;
-        font-size: 1.1rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="hero">
+    <img src="https://i.ibb.co.com/YCvJrrT/In-Shot-20251015-113151893.jpg" alt="HridoyTV Logo" class="logo-img">
     <h1 class="logo">HridoyTV</h1>
     <p class="tagline">The Home of Live TV</p>
 
     <div class="cta-box">
-      <h2 class="cta-title">দেশি বিদেশি সকল লাইভ টিভি দেখতে এখানে ক্লিক করুন:</h2>
+      <h2 class="cta-title">
+       
+        🌍 HD মানের লাইভ স্ট্রিম, দ্রুত লোডিং অভিজ্ঞতার জন্য এখনই দেখুন —  
+        আপনার পছন্দের সব চ্যানেল এক জায়গায়! 📺✨<br><br> 🎬 যেকোনো খবর, খেলা, বিনোদন, কার্টুন, মুভি ও মিউজিকসহ দেশি-বিদেশি সব লাইভ টিভি দেখতে এখানে ক্লিক করুন। 👇👇👇 </h2>
       <a href="https://hridoytv.4mel.com" class="cta-link" target="_blank" rel="noopener">
-        hridoytv.4mel.com
+        এখনই দেখুন
       </a>
     </div>
   </div>
