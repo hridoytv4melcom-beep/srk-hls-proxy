@@ -11,165 +11,112 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
-    font-family:'Noto Sans Bengali','Poppins',sans-serif;
-    background: linear-gradient(-45deg, #f8fffb, #ffffff, #f3fff4, #f9fff8);
-    background-size:400% 400%;
-    animation:bgMove 14s ease infinite;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:1rem;
+  font-family:'Noto Sans Bengali','Poppins',sans-serif;
+  background:linear-gradient(-45deg,#f8fff8,#ffffff,#f0fff0,#f9fff9);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
+  display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:1rem;
+  transition:all 0.3s;
 }
 @keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
-
-h1{font-size:2rem;color:#00b34a;margin-bottom:0.3rem; background: linear-gradient(90deg,#00c853,#64dd17);-webkit-background-clip:text;color:transparent;animation:textGlow 3s ease-in-out infinite alternate;}
-@keyframes textGlow{
-    from{text-shadow:0 0 6px rgba(0,200,83,0.4);}
-    to{text-shadow:0 0 14px rgba(0,230,118,0.7);}
-}
-p{font-size:1rem;margin:0.3rem 0;}
-#languageSelect{margin:1rem 0;padding:6px 12px;font-size:1rem;border-radius:6px;border:1px solid #00c853;cursor:pointer;background:#f4fff6;}
-
-.hero{
-    background:rgba(255,255,255,0.9);
-    padding:1.5rem 1rem;
-    border-radius:18px;
-    border:1px solid rgba(0,200,83,0.3);
-    box-shadow:0 4px 20px rgba(0,200,83,0.1);
-    text-align:center;
-    max-width:480px;
-    position:relative;
-    overflow:hidden;
-}
-.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:18px;
-    padding:1.5px;
-    background:linear-gradient(90deg,#00e676,#00c853,#64dd17,#aee571);
-    background-size:400% 400%;
-    animation:glowBorder 8s linear infinite;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: destination-out;
-}
-@keyframes glowBorder{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
-
-.cta-link{
-    display:inline-block;
-    background:linear-gradient(90deg,#00c853,#64dd17);
-    color:#fff;
-    font-weight:600;
-    text-decoration:none;
-    padding:10px 26px;
-    border-radius:40px;
-    font-size:1rem;
-    margin-top:1rem;
-    transition:all 0.3s ease;
-    box-shadow:0 0 15px rgba(0,200,83,0.5);
-    animation:pulseGlow 2.8s infinite ease-in-out;
-}
-@keyframes pulseGlow{
-    0%{box-shadow:0 0 10px rgba(0,200,83,0.4);transform:scale(1);}
-    50%{box-shadow:0 0 22px rgba(0,230,118,0.8);transform:scale(1.04);}
-    100%{box-shadow:0 0 10px rgba(0,200,83,0.4);transform:scale(1);}
-}
+h1{font-size:2.2rem;font-weight:700;background:linear-gradient(90deg,#00c853,#64dd17);-webkit-background-clip:text;color:transparent;margin-bottom:0.3rem;animation:textGlow 3s ease-in-out infinite alternate;}
+@keyframes textGlow{from{text-shadow:0 0 6px rgba(0,200,83,0.4);}to{text-shadow:0 0 14px rgba(0,230,118,0.7);}}
+.logo-img{width:95px;height:95px;border-radius:50%;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-bottom:0.4rem;}
+.tagline{font-size:1.1rem;color:#333;margin-bottom:0.5rem;text-align:center;}
+.subnote{font-size:0.9rem;color:#555;text-align:center;margin-bottom:1rem;}
+#languageSelect{margin:0.8rem 0;padding:7px 14px;font-size:1rem;border-radius:6px;border:1px solid #00c853;cursor:pointer;background:#f9fff9;}
+.hero{background:rgba(255,255,255,0.9);border:1px solid rgba(0,200,83,0.3);border-radius:18px;padding:1.4rem 1rem;text-align:center;max-width:480px;box-shadow:0 4px 18px rgba(0,200,83,0.1);}
+.cta-link{display:inline-block;background:linear-gradient(90deg,#00c853,#64dd17);color:#fff;font-weight:600;text-decoration:none;padding:10px 28px;border-radius:40px;font-size:1rem;margin-top:1rem;transition:all 0.3s ease;box-shadow:0 0 15px rgba(0,200,83,0.5);}
 .cta-link:hover{background:linear-gradient(90deg,#00e676,#9cff57);transform:translateY(-2px) scale(1.05);}
-
-[dir="rtl"]{direction:rtl;text-align:right;}
-
-.footer{
-    margin-top:1.5rem;
-    text-align:center;
-    color:#555;
-    font-size:0.85rem;
-    line-height:1.4;
-}
+.footer{margin-top:1.5rem;text-align:center;color:#555;font-size:0.85rem;line-height:1.4;}
 .footer a{color:#00a548;text-decoration:none;font-weight:600;}
 .footer a:hover{text-decoration:underline;}
-
-@media (max-width:480px){
-    .hero{padding:1rem;}
-    h1{font-size:1.8rem;}
-    #languageSelect{font-size:0.9rem;}
-}
+[dir="rtl"]{direction:rtl;text-align:right;}
 </style>
 </head>
+
 <body>
 
-<h1 id="logoText">HridoyTV</h1>
-<p id="tagline">লাইভ টিভির ঘর</p>
-<p id="subnote">🌐 Part of HridoyTV.4mel.com — HD live streaming platform 💚</p>
+<img src="https://i.ibb.co.com/YCvJrrT/In-Shot-20251015-113151893.jpg" alt="HridoyTV Logo" class="logo-img">
+<h1>HridoyTV</h1>
+<p class="tagline" id="tagline">লাইভ টিভির ঘর</p>
+<p class="subnote" id="subnote">🌐 এটি HridoyTV.4mel.com এর অংশ — HD মানের লাইভ স্ট্রিমিং প্ল্যাটফর্ম 💚</p>
 
 <select id="languageSelect">
 <option value="en">English</option>
 <option value="bn">বাংলা (Bengali)</option>
 <option value="hi">हिंदी (Hindi)</option>
-<option value="ne">नेपाली (Nepali)</option>
 <option value="ur">اردو (Urdu)</option>
+<option value="ar">العربية (Arabic)</option>
+<option value="ne">नेपाली (Nepali)</option>
 <option value="si">සිංහල (Sinhala)</option>
-<option value="sw">Kiswahili (Swahili)</option>
 <option value="ta">தமிழ் (Tamil)</option>
+<option value="sw">Kiswahili (Swahili)</option>
+<option value="fr">Français (French)</option>
+<option value="es">Español (Spanish)</option>
+<option value="pt">Português (Portuguese)</option>
+<option value="ru">Русский (Russian)</option>
+<option value="tr">Türkçe (Turkish)</option>
+<option value="id">Bahasa Indonesia</option>
+<option value="de">Deutsch (German)</option>
+<option value="fa">فارسی (Persian)</option>
+<option value="ms">Bahasa Melayu (Malay)</option>
 </select>
 
 <div class="hero">
-<p id="ctaText">🎥 HD মানের লাইভ স্ট্রিম উপভোগ করুন — দ্রুত লোডিং এবং বাফার মুক্ত অভিজ্ঞতা!  
-🔹 খবর, খেলা, বিনোদন, কার্টুন ও মুভি — এক ক্লিকে দেখুন!</p>
+<p id="ctaText">
+🎥 HD মানের লাইভ স্ট্রিম উপভোগ করুন — দ্রুত লোডিং ও বাফার মুক্ত অভিজ্ঞতা!  
+🔹 খবর, খেলা, বিনোদন, কার্টুন ও মুভি — এক ক্লিকে দেখুন!
+</p>
 <a class="cta-link" href="https://hridoytv.4mel.com" target="_blank" rel="noopener">▶ এখনই দেখুন</a>
 </div>
 
 <div class="footer">
-<p>© 2025 <strong>HridoyTV</strong> — Secure • Fast • HD Streaming<br>Designed with 💚 by Hridoy</p>
+<p>© 2025 <strong>HridoyTV</strong> — Secure • Fast • HD Streaming<br>
+Part of <a href="https://hridoytv.4mel.com" target="_blank">HridoyTV.4mel.com</a><br>
+Designed with 💚 by Hridoy</p>
 </div>
 
 <script>
-// Language text data
-const texts = {
-en:{tagline:"Home of Live TV", subnote:"HD live streaming platform 💚", cta:"🎥 Enjoy HD live streams — fast loading & buffer-free!\n🔹 News, sports, entertainment, cartoons & movies — all in one click!"},
-bn:{tagline:"লাইভ টিভির ঘর", subnote:"HD লাইভ স্ট্রিমিং প্ল্যাটফর্ম 💚", cta:"🎥 HD মানের লাইভ স্ট্রিম উপভোগ করুন — দ্রুত লোডিং এবং বাফার মুক্ত অভিজ্ঞতা!\n🔹 খবর, খেলা, বিনোদন, কার্টুন ও মুভি — এক ক্লিকে দেখুন!"},
-hi:{tagline:"लाइव टीवी का घर", subnote:"HD लाइव स्ट्रीमिंग प्लेटफ़ॉर्म 💚", cta:"🎥 एचडी लाइव स्ट्रीम का आनंद लें — तेज़ लोड और बिना बफर!\n🔹 समाचार, खेल, मनोरंजन, कार्टून और फिल्में — एक क्लिक में!"},
-ne:{tagline:"प्रत्यक्ष टिभीको घर", subnote:"HD लाइभ स्ट्रीमिङ प्लेटफर्म 💚", cta:"🎥 HD लाइभ स्ट्रीमिङको मजा लिनुहोस् — छिटो लोडिंग र बफर-रहित!\n🔹 समाचार, खेल, मनोरञ्जन, कार्टुन र चलचित्र — एक क्लिकमा!"},
-ur:{tagline:"لائیو ٹی وی کا گھر", subnote:"HD لائیو سٹریمنگ پلیٹ فارم 💚", cta:"🎥 HD لائیو سٹریمنگ کا لطف اٹھائیں — تیز لوڈنگ اور بغیر بفر!\n🔹 خبریں، کھیل، تفریح، کارٹون اور فلمیں — ایک کلک میں!"},
-si:{tagline:"ලයිව් ටීවීගේ නිවස", subnote:"HD live streaming platform 💚", cta:"🎥 HD live streams අත්විඳින්න — වේගවත් load සහ buffer නැති!\n🔹 පුවත්, ක්‍රීඩා, විනෝද, කාටූන් සහ චිත්‍රපටි — එක් click එකෙන්!"},
-sw:{tagline:"Nyumba ya TV ya Moja kwa Moja", subnote:"HD live streaming platform 💚", cta:"🎥 Furahia HD live streams — upakuaji wa haraka bila buffering!\n🔹 Habari, michezo, burudani, katuni na filamu — kwa bonyeza moja!"},
-ta:{tagline:"நேரடி டிவி வீடு", subnote:"HD live streaming platform 💚", cta:"🎥 HD live streams அனுபவிக்கவும் — விரைவான load மற்றும் buffer இல்லாமல்!\n🔹 செய்திகள், விளையாட்டு, பொழுதுபோக்கு, கார்ட்டூன்கள் மற்றும் திரைப்படங்கள் — ஒரு கிளிக்கில்!"}
+// 🔹 Text for multiple languages
+const texts={
+en:{tag:"Home of Live TV",sub:"Part of HridoyTV.4mel.com — HD Live Streaming Platform 💚",cta:"🎥 Enjoy HD live streams — fast loading & buffer-free!\n🔹 Watch news, sports, entertainment, cartoons & movies in one click!"},
+bn:{tag:"লাইভ টিভির ঘর",sub:"এটি HridoyTV.4mel.com এর অংশ — HD মানের লাইভ স্ট্রিমিং প্ল্যাটফর্ম 💚",cta:"🎥 HD মানের লাইভ স্ট্রিম উপভোগ করুন — দ্রুত লোডিং ও বাফার মুক্ত অভিজ্ঞতা!\n🔹 খবর, খেলা, বিনোদন, কার্টুন ও মুভি — এক ক্লিকে দেখুন!"},
+hi:{tag:"लाइव टीवी का घर",sub:"HridoyTV.4mel.com का हिस्सा — एचडी लाइव स्ट्रीमिंग प्लेटफ़ॉर्म 💚",cta:"🎥 एचडी लाइव स्ट्रीम देखें — तेज़ लोडिंग और बिना बफ़र!\n🔹 समाचार, खेल, मनोरंजन, कार्टून और फ़िल्में — एक क्लिक में!"},
+ur:{tag:"لائیو ٹی وی کا گھر",sub:"HridoyTV.4mel.com کا حصہ — ایچ ڈی لائیو سٹریمنگ پلیٹ فارم 💚",cta:"🎥 ایچ ڈی لائیو سٹریمنگ دیکھیں — تیز رفتار اور بغیر بفر!\n🔹 خبریں، کھیل، تفریح، کارٹون اور فلمیں — ایک کلک میں!"},
+ar:{tag:"بيت البث المباشر",sub:"جزء من HridoyTV.4mel.com — منصة بث مباشر عالية الدقة 💚",cta:"🎥 استمتع بالبث المباشر بجودة HD — تحميل سريع بدون تقطيع!\n🔹 الأخبار، الرياضة، الترفيه، الرسوم المتحركة والأفلام — بنقرة واحدة!"},
+ne:{tag:"प्रत्यक्ष टिभीको घर",sub:"HridoyTV.4mel.com को हिस्सा — HD लाइभ स्ट्रीमिङ प्लेटफर्म 💚",cta:"🎥 HD लाइभ स्ट्रीमिङ हेर्नुहोस् — छिटो लोड र बफर-रहित!\n🔹 समाचार, खेल, मनोरञ्जन, कार्टुन र चलचित्र — एक क्लिकमा!"},
+si:{tag:"ලයිව් ටීවීගේ නිවස",sub:"HridoyTV.4mel.com හි අංගයකි — HD live streaming platform 💚",cta:"🎥 HD live streams අත්විඳින්න — වේගවත් load සහ buffering නැතිව!\n🔹 පුවත්, ක්‍රීඩා, විනෝද, කාටූන් සහ චිත්‍රපටි — එක් ක්ලික් එකෙන්!"},
+ta:{tag:"நேரடி டிவி வீடு",sub:"HridoyTV.4mel.com ஒரு பகுதி — HD live streaming platform 💚",cta:"🎥 HD live streams அனுபவிக்கவும் — வேகமான load மற்றும் buffer இல்லாமல்!\n🔹 செய்திகள், விளையாட்டு, பொழுதுபோக்கு, கார்ட்டூன்கள் மற்றும் திரைப்படங்கள் — ஒரு கிளிக்கில்!"},
+sw:{tag:"Nyumba ya TV ya Moja kwa Moja",sub:"Sehemu ya HridoyTV.4mel.com — Jukwaa la HD Live Streaming 💚",cta:"🎥 Furahia HD live streams — kasi kubwa bila buffering!\n🔹 Habari, michezo, burudani, katuni na filamu — kwa bonyeza moja!"},
+fr:{tag:"La maison de la télévision en direct",sub:"Partie de HridoyTV.4mel.com — Plateforme HD Live Streaming 💚",cta:"🎥 Profitez des diffusions HD en direct — chargement rapide et sans coupure!\n🔹 Actualités, sports, divertissement, dessins animés et films — en un clic!"},
+es:{tag:"El hogar de la televisión en vivo",sub:"Parte de HridoyTV.4mel.com — Plataforma de streaming HD 💚",cta:"🎥 Disfruta transmisiones en vivo HD — carga rápida sin interrupciones!\n🔹 Noticias, deportes, entretenimiento, dibujos animados y películas — ¡en un clic!"},
+pt:{tag:"Casa da TV ao vivo",sub:"Parte do HridoyTV.4mel.com — Plataforma de streaming HD 💚",cta:"🎥 Aproveite transmissões ao vivo em HD — carregamento rápido sem buffer!\n🔹 Notícias, esportes, entretenimento, desenhos e filmes — em um clique!"},
+ru:{tag:"Дом прямого эфира",sub:"Часть HridoyTV.4mel.com — Платформа HD Live Streaming 💚",cta:"🎥 Наслаждайтесь HD трансляциями — быстрое загрузка и без буферизации!\n🔹 Новости, спорт, развлечения, мультфильмы и фильмы — одним кликом!"},
+tr:{tag:"Canlı TV'nin Evi",sub:"HridoyTV.4mel.com'un bir parçası — HD Canlı Yayın Platformu 💚",cta:"🎥 HD canlı yayınların keyfini çıkarın — hızlı yükleme ve kesintisiz!\n🔹 Haberler, spor, eğlence, çizgi filmler ve filmler — tek tıkla!"},
+id:{tag:"Rumah TV Langsung",sub:"Bagian dari HridoyTV.4mel.com — Platform Streaming Langsung HD 💚",cta:"🎥 Nikmati siaran langsung HD — cepat dan tanpa buffering!\n🔹 Berita, olahraga, hiburan, kartun & film — dalam satu klik!"},
+de:{tag:"Das Zuhause des Live-TV",sub:"Teil von HridoyTV.4mel.com — HD Live Streaming Plattform 💚",cta:"🎥 Genieße HD-Livestreams — schnelles Laden & keine Unterbrechung!\n🔹 Nachrichten, Sport, Unterhaltung, Cartoons & Filme — mit einem Klick!"},
+fa:{tag:"خانه تلویزیون زنده",sub:"بخشی از HridoyTV.4mel.com — پلتفرم پخش زنده HD 💚",cta:"🎥 پخش زنده HD را تماشا کنید — سریع و بدون بافر!\n🔹 اخبار، ورزش، سرگرمی، کارتون و فیلم‌ها — تنها با یک کلیک!"},
+ms:{tag:"Rumah TV Langsung",sub:"Sebahagian daripada HridoyTV.4mel.com — Platform Penstriman HD 💚",cta:"🎥 Nikmati siaran langsung HD — pantas dan tanpa gangguan!\n🔹 Berita, sukan, hiburan, kartun & filem — dengan satu klik!"}
 };
-
-const rtlLanguages = ["ur"];
-function setLanguage(lang){
-    document.body.dir = rtlLanguages.includes(lang) ? "rtl" : "ltr";
-    document.getElementById("tagline").innerText = texts[lang].tagline;
-    document.getElementById("subnote").innerText = texts[lang].subnote;
-    document.getElementById("ctaText").innerText = texts[lang].cta;
+const rtl=["ur","ar","fa"];
+function setLang(l){
+document.body.dir=rtl.includes(l)?"rtl":"ltr";
+document.getElementById("tagline").innerText=texts[l].tag;
+document.getElementById("subnote").innerText=texts[l].sub;
+document.getElementById("ctaText").innerText=texts[l].cta;
 }
-
-// Auto detect browser language
-const userLang = navigator.language.slice(0,2);
-if(texts[userLang]) setLanguage(userLang);
-document.getElementById("languageSelect").value = userLang in texts ? userLang : "bn";
-
-// Manual dropdown change
-document.getElementById("languageSelect").addEventListener("change", function(){
-    setLanguage(this.value);
-});
-
-// Optional: Auto detect country via IP (free API)
-fetch('https://ipapi.co/json/')
-.then(res=>res.json())
-.then(data=>{
-    const countryLangMap = {
-        BD:'bn', IN:'hi', NP:'ne', PK:'ur', LK:'si', TZ:'sw', KE:'sw', US:'en', GB:'en'
-    };
-    if(countryLangMap[data.country]) setLanguage(countryLangMap[data.country]);
+const userLang=navigator.language.slice(0,2);
+if(texts[userLang])setLang(userLang);
+document.getElementById("languageSelect").value=userLang in texts?userLang:"bn";
+document.getElementById("languageSelect").addEventListener("change",e=>setLang(e.target.value));
+fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+const map={BD:'bn',IN:'hi',PK:'ur',NP:'ne',LK:'si',MY:'ms',TZ:'sw',KE:'sw',SA:'ar',IR:'fa',TR:'tr',ID:'id',FR:'fr',ES:'es',PT:'pt',RU:'ru',DE:'de',US:'en',GB:'en'};
+if(map[d.country])setLang(map[d.country]);
 });
 </script>
 
