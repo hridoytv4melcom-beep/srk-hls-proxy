@@ -5,33 +5,191 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HridoyTV — Multilingual Live TV</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Noto+Sans:wght@400;600&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* CSS Variables for easy theme adjustments */
+:root {
+  --primary-color: #00c853; /* Light Green */
+  --secondary-color: #64dd17; /* Lime Green */
+  --text-color-dark: #212121;
+  --text-color-light: #555;
+  --bg-start-color: #e8f5e9; /* Very Light Green */
+  --bg-end-color: #ffffff;
+  --card-bg-color: rgba(255, 255, 255, 0.98);
+}
+
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
-  font-family:'Noto Sans Bengali','Poppins',sans-serif;
-  background:linear-gradient(-45deg,#f8fff8,#ffffff,#f0fff0,#f9fff9);
-  background-size:400% 400%;
-  animation:bgMove 12s ease infinite;
-  display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:1rem;
+  font-family:'Noto Sans Bengali','Noto Sans','Poppins',sans-serif;
+  background:linear-gradient(135deg, var(--bg-start-color), var(--bg-end-color));
+  background-size:200% 200%;
+  animation:bgMove 15s ease infinite alternate;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem;
+  color: var(--text-color-dark);
 }
+/* Subtle background texture */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.1;
+    z-index: -1;
+}
+
 @keyframes bgMove{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+  0%{background-position:0% 0%;}
+  100%{background-position:100% 100%;}
 }
-h1{font-size:2.2rem;font-weight:700;background:linear-gradient(90deg,#00c853,#64dd17);-webkit-background-clip:text;color:transparent;margin-bottom:0.3rem;animation:textGlow 3s ease-in-out infinite alternate;}
-@keyframes textGlow{from{text-shadow:0 0 6px rgba(0,200,83,0.4);}to{text-shadow:0 0 14px rgba(0,230,118,0.7);}}
-.logo-img{width:95px;height:95px;border-radius:50%;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-bottom:0.4rem;}
-.tagline{font-size:1.1rem;color:#333;margin-bottom:0.5rem;text-align:center;}
-#languageSelect{margin:0.8rem 0;padding:7px 14px;font-size:1rem;border-radius:6px;border:1px solid #00c853;cursor:pointer;background:#f9fff9;}
-.hero{background:rgba(255,255,255,0.95);border:1px solid rgba(0,200,83,0.3);border-radius:18px;padding:1.4rem 1rem;text-align:left;max-width:480px;box-shadow:0 4px 18px rgba(0,200,83,0.1);}
-.cta-link{display:inline-block;background:linear-gradient(90deg,#00c853,#64dd17);color:#fff;font-weight:600;text-decoration:none;padding:10px 28px;border-radius:40px;font-size:1rem;margin-top:1rem;transition:all 0.3s ease;box-shadow:0 0 15px rgba(0,200,83,0.5);}
-.cta-link:hover{background:linear-gradient(90deg,#00e676,#9cff57);transform:translateY(-2px) scale(1.05);}
-.footer{margin-top:1.5rem;text-align:center;color:#555;font-size:0.85rem;line-height:1.4;}
+h1{
+  font-family:'Poppins', sans-serif;
+  font-size:2.8rem;
+  font-weight:800;
+  background:linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip:text;
+  color:transparent;
+  margin-bottom:0.1rem;
+  animation:textGlow 4s ease-in-out infinite alternate;
+  letter-spacing: -1px;
+}
+@keyframes textGlow{
+  from{text-shadow:0 0 8px rgba(0,200,83,0.3);}
+  to{text-shadow:0 0 16px rgba(0,230,118,0.6);}
+}
+.logo-img{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 6px 16px rgba(0,0,0,0.25), 0 0 0 4px var(--primary-color);
+  margin-bottom:0.8rem;
+  transition:transform 0.3s ease-in-out;
+}
+.logo-img:hover{
+  transform:scale(1.05) rotate(-3deg);
+  box-shadow:0 8px 20px rgba(0,0,0,0.3), 0 0 0 5px var(--secondary-color);
+}
+.tagline{
+  font-size:1.3rem;
+  font-weight:600;
+  color:var(--text-color-dark);
+  margin-bottom:0.5rem;
+  text-align:center;
+}
+#languageSelect{
+  margin:1.2rem 0;
+  padding:10px 18px;
+  font-size:1rem;
+  border-radius:25px;
+  border:2px solid var(--primary-color);
+  cursor:pointer;
+  background:var(--card-bg-color);
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  transition:border-color 0.3s;
+  outline:none;
+}
+#languageSelect:focus{
+  border-color:var(--secondary-color);
+  box-shadow:0 0 0 3px rgba(100,221,23,0.4);
+}
+.hero{
+  background:var(--card-bg-color);
+  border:none;
+  border-radius:24px;
+  padding:2rem;
+  text-align:left;
+  max-width:520px;
+  width: 100%;
+  box-shadow:0 10px 30px rgba(0,200,83,0.15), 0 0 10px rgba(0,200,83,0.05);
+  transition:transform 0.3s ease;
+}
+.hero:hover {
+  transform: translateY(-3px);
+  box-shadow:0 15px 35px rgba(0,200,83,0.2), 0 0 15px rgba(0,200,83,0.1);
+}
+.cta-link{
+  display:block; /* Changed to block for full width alignment inside hero */
+  width: 90%;
+  margin: 1.5rem auto 0;
+  text-align: center;
+  background:linear-gradient(45deg, var(--primary-color), var(--secondary-color) 70%);
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+  padding:14px 40px;
+  border-radius:50px;
+  font-size:1.1rem;
+  transition:all 0.3s ease;
+  box-shadow:0 8px 20px rgba(0,200,83,0.5);
+  border: none;
+}
+.cta-link:hover{
+  background:linear-gradient(45deg, #00e676, #9cff57);
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 12px 25px rgba(0,230,118,0.7);
+}
+.footer{
+  margin-top:2rem;
+  text-align:center;
+  color:var(--text-color-light);
+  font-size:0.9rem;
+  line-height:1.6;
+  opacity: 0.8;
+}
 [dir="rtl"]{direction:rtl;text-align:right;}
-.cta-text p{margin-bottom:0.6rem;line-height:1.5;}
+.cta-text p{
+  margin-bottom:0.7rem;
+  line-height:1.7;
+  color: var(--text-color-dark);
+}
+.cta-text strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+.feature-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+.feature-list li {
+  margin-bottom: 0.4rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+  color: var(--text-color-light);
+}
+.feature-list li::before {
+  content: '⚡'; /* Use a modern emoji or SVG icon */
+  position: absolute;
+  left: 0;
+  color: var(--secondary-color);
+  font-size: 1.1em;
+}
+.main-pitch {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: var(--text-color-dark);
+}
+.heading-feature {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.heading-feature::before {
+    content: '✨';
+    font-size: 1.2em;
+}
 </style>
 </head>
 
@@ -59,17 +217,20 @@ h1{font-size:2.2rem;font-weight:700;background:linear-gradient(90deg,#00c853,#64
 
 <div class="hero">
 <div class="cta-text" id="ctaText">
-<p>🎥 HD লাইভ স্ট্রিম এক ক্লিকে!</p>
+<p class="main-pitch">🎥 <strong>HD লাইভ স্ট্রিম এক ক্লিকে!</strong></p>
 <p>দেখুন বাংলাদেশি ও আন্তর্জাতিক চ্যানেল — খবর, খেলা, বিনোদন, কার্টুন ও মুভি, সব এক প্ল্যাটফর্মে।</p>
-<p>✨ বৈশিষ্ট্য:</p>
-<p>• HD ও Full HD মানের ভিডিও স্ট্রিম</p>
-<p>• দ্রুত লোডিং ও বাফার মুক্ত অভিজ্ঞতা</p>
-<p>• এক ক্লিকে এক্সেস, কোন লগইন বা সাবস্ক্রিপশন প্রয়োজন নেই</p>
-<p>• দেশি ও আন্তর্জাতিক জনপ্রিয় চ্যানেল</p>
-<p>• সরাসরি লাইভ ইভেন্ট এবং খেলার সম্প্রচার</p>
-<p>• মাল্টিপল ডিভাইস সাপোর্ট (মোবাইল, ট্যাব, ডেস্কটপ, স্মার্ট TV)</p>
-<p>• ব্যবহারবান্ধব ইন্টারফেস, সহজ নেভিগেশন</p>
-<p>• নিয়মিত আপডেট হওয়া চ্যানেল তালিকা</p>
+
+<div class="heading-feature" id="featureHeading">বৈশিষ্ট্যসমূহ</div>
+<ul class="feature-list" id="featureList">
+    <li>HD ও Full HD মানের ভিডিও স্ট্রিম</li>
+    <li>দ্রুত লোডিং ও বাফার মুক্ত অভিজ্ঞতা</li>
+    <li>এক ক্লিকে এক্সেস, কোন লগইন বা সাবস্ক্রিপশন প্রয়োজন নেই</li>
+    <li>দেশি ও আন্তর্জাতিক জনপ্রিয় চ্যানেল</li>
+    <li>সরাসরি লাইভ ইভেন্ট এবং খেলার সম্প্রচার</li>
+    <li>মাল্টিপল ডিভাইস সাপোর্ট (মোবাইল, ট্যাব, ডেস্কটপ, স্মার্ট TV)</li>
+    <li>ব্যবহারবান্ধব ইন্টারফেস, সহজ নেভিগেশন</li>
+    <li>নিয়মিত আপডেট হওয়া চ্যানেল তালিকা</li>
+</ul>
 </div>
 <a class="cta-link" href="https://hridoytv.4mel.com" target="_blank" rel="noopener">▶ এখনই দেখুন</a>
 </div>
@@ -80,28 +241,48 @@ h1{font-size:2.2rem;font-weight:700;background:linear-gradient(90deg,#00c853,#64
 
 <script>
 const texts = {
-bn:{tag:"লাইভ টিভির ঘর",cta:`🎥 HD লাইভ স্ট্রিম এক ক্লিকে!\nদেখুন বাংলাদেশি ও আন্তর্জাতিক চ্যানেল — খবর, খেলা, বিনোদন, কার্টুন ও মুভি, সব এক প্ল্যাটফর্মে।\n\n✨ বৈশিষ্ট্য:\n• HD ও Full HD মানের ভিডিও স্ট্রিম\n• দ্রুত লোডিং ও বাফার মুক্ত অভিজ্ঞতা\n• এক ক্লিকে এক্সেস, কোন লগইন বা সাবস্ক্রিপশন প্রয়োজন নেই\n• দেশি ও আন্তর্জাতিক জনপ্রিয় চ্যানেল\n• সরাসরি লাইভ ইভেন্ট এবং খেলার সম্প্রচার\n• মাল্টিপল ডিভাইস সাপোর্ট (মোবাইল, ট্যাব, ডেস্কটপ, স্মার্ট TV)\n• ব্যবহারবান্ধব ইন্টারফেস, সহজ নেভিগেশন\n• নিয়মিত আপডেট হওয়া চ্যানেল তালিকা`},
-en:{tag:"Home of Live TV",cta:`🎥 HD Live stream in one click!\nWatch Bangladeshi & International channels — news, sports, entertainment, cartoons & movies all in one platform.\n\n✨ Features:\n• HD & Full HD video streams\n• Fast loading & buffer-free\n• One-click access, no login/subscription required\n• Popular local & international channels\n• Live events & sports coverage\n• Multi-device support (mobile, tablet, desktop, smart TV)\n• User-friendly interface, easy navigation\n• Regularly updated channel list`},
-hi:{tag:"लाइव टीवी का घर",cta:`🎥 HD लाइव स्ट्रीम एक क्लिक में!\nदेखें भारतीय और अंतर्राष्ट्रीय चैनल — समाचार, खेल, मनोरंजन, कार्टून और फ़िल्में, सब एक प्लेटफ़ॉर्म पर।\n\n✨ विशेषताएँ:\n• HD और Full HD वीडियो स्ट्रीम\n• तेज़ लोडिंग और बफ़र मुक्त\n• एक क्लिक में एक्सेस, कोई लॉगिन/सदस्यता नहीं\n• देशी और अंतर्राष्ट्रीय लोकप्रिय चैनल\n• लाइव इवेंट और खेल कवरेज\n• मल्टी-डिवाइस सपोर्ट (मोबाइल, टैबलेट, डेस्कटॉप, स्मार्ट टीवी)\n• उपयोगकर्ता के अनुकूल इंटरफ़ेस, आसान नेविगेशन\n• नियमित अपडेटेड चैनल सूची`},
-ur:{tag:"لائیو ٹی وی کا گھر",cta:`🎥 HD لائیو سٹریمنگ ایک کلک میں!\nدیکھیں پاکستانی اور بین الاقوامی چینلز — خبریں، کھیل، تفریح، کارٹون اور فلمیں، سب ایک پلیٹ فارم پر۔\n\n✨ خصوصیات:\n• HD اور Full HD ویڈیو اسٹریم\n• تیز رفتار لوڈنگ اور بغیر بفر\n• ایک کلک میں رسائی، کوئی لاگ ان / سبسکرپشن نہیں\n• مقامی اور بین الاقوامی مشہور چینلز\n• براہ راست ایونٹس اور کھیل کی نشریات\n• متعدد ڈیوائس سپورٹ (موبائل، ٹیبلٹ، ڈیسک ٹاپ، اسمارٹ ٹی وی)\n• صارف دوست انٹرفیس، آسان نیویگیشن\n• باقاعدگی سے اپ ڈیٹ ہونے والی چینلز کی فہرست`},
-ar:{tag:"بيت البث المباشر",cta:`🎥 شاهد البث المباشر بجودة HD بنقرة واحدة!\nاستمتع بالقنوات المحلية والدولية — أخبار، رياضة، ترفيه، رسوم متحركة وأفلام على منصة واحدة.\n\n✨ الميزات:\n• بث فيديو HD و Full HD\n• تحميل سريع وتجربة بدون توقف\n• وصول بنقرة واحدة، بدون تسجيل أو اشتراك\n• القنوات المحلية والدولية الشهيرة\n• الأحداث الرياضية والبث المباشر\n• دعم متعدد الأجهزة (الهاتف، التابلت، الكمبيوتر، التلفاز الذكي)\n• واجهة سهلة الاستخدام، تنقل بسيط\n• قائمة القنوات محدثة باستمرار`},
-sw:{tag:"Nyumba ya TV Moja kwa Moja",cta:`🎥 HD Live stream kwa click moja!\nTazama channels za ndani na kimataifa — habari, michezo, burudani, katuni & filamu zote kwenye jukwaa moja.\n\n✨ Vipengele:\n• HD & Full HD video streams\n• Haraka kupakia & bila buffering\n• One-click access, hakuna login/subscribe\n• Popular local & international channels\n• Live events & sports coverage\n• Multi-device support (simu, tablet, desktop, smart TV)\n• User-friendly interface, easy navigation\n• Regularly updated channel list`},
-id:{tag:"Rumah TV Langsung",cta:`🎥 Streaming HD dengan satu klik!\nTonton saluran lokal & internasional — berita, olahraga, hiburan, kartun & film di satu platform.\n\n✨ Fitur:\n• HD & Full HD video streams\n• Cepat loading & bebas buffer\n• One-click access, tanpa login/subscription\n• Saluran lokal & internasional populer\n• Live events & sports coverage\n• Multi-device support (mobile, tablet, desktop, smart TV)\n• User-friendly interface, easy navigation\n• Regularly updated channel list`},
-si:{tag:"සජීවී ටීවී",cta:`🎥 HD සජීවී ප්‍රවහනය එක් ක්ලික් එකකින්!\nදෙසිය සහ ජාත්‍යන්තර නාලිකා බලන්න — පුවත්, ක්‍රීඩා, විනෝදය, කාටූන් සහ චිත්‍රපට සියල්ල එකම වේදිකාවේ.\n\n✨ විශේෂාංග:\n• HD සහ Full HD වීඩියෝ ප්‍රවහන\n• වේගවත් ලෝඩ් කිරීම සහ බෆර් රහිත\n• එක් ක්ලික් ප්‍රවේශය, ලොගින් / සබ්ස්ක්‍රිප්ශන් අවශ්‍ය නැත\n• ජනප්‍රිය දේශීය සහ ජාත්‍යන්තර නාලිකා\n• සජීවී අවස්ථා සහ ක්‍රීඩා සවිකිරීම\n• බහු-ඉන්ධන සහාය (මොබයිල්, ටැබ්ලට්, ඩෙස්ක්ටොප්, ස්මාර්ට් TV)\n• භාවිතයට පහසු අතුරුමුහුණත්, පහසු නැවිගේශන්\n• නිතර යාවත්කාලීන කරන නාලිකා ලැයිස්තුව`},
-ru:{tag:"Дом живого ТВ",cta:`🎥 HD потоковое вещание в один клик!\nСмотрите местные и международные каналы — новости, спорт, развлечения, мультфильмы и фильмы на одной платформе.\n\n✨ Особенности:\n• HD & Full HD видео потоки\n• Быстрая загрузка & без буферизации\n• Доступ в один клик, без логина/подписки\n• Популярные местные и международные каналы\n• Прямые трансляции событий и спортивные трансляции\n• Поддержка нескольких устройств (мобильные, планшеты, ПК, смарт ТВ)\n• Удобный интерфейс, простая навигация\n• Регулярно обновляемый список каналов`},
-ne:{tag:"प्रत्यक्ष टिभीको घर",cta:`🎥 HD प्रत्यक्ष स्ट्रिम एक क्लिकमा!\nस्थानीय र अन्तर्राष्ट्रिय च्यानलहरू हेर्नुहोस् — समाचार, खेलकुद, मनोरञ्जन, कार्टुन र चलचित्र सबै एउटै प्लेटफर्ममा।\n\n✨ सुविधाहरू:\n• HD & Full HD भिडियो स्ट्रिम\n• छिटो लोडिङ & बफर-मुक्त\n• एक क्लिक पहुँच, कुनै लगइन/सब्सक्रिप्शन आवश्यक छैन\n• लोकप्रिय स्थानीय & अन्तर्राष्ट्रिय च्यानलहरू\n• प्रत्यक्ष कार्यक्रम र खेल प्रसारण\n• बहु-उपकरण समर्थन (मोबाइल, ट्याब्लेट, डेस्कटप, स्मार्ट TV)\n• प्रयोगकर्ता मैत्री इन्टरफेस, सजिलो नेभिगेसन\n• नियमित रूपमा अपडेट गरिएको च्यानल सूची`},
-my:{tag:"မြန်မာ (Burmese) TV",cta:`🎥 HD Live Stream တစ်ချက်နှိပ်ပြီး!\nဒေသတွင်းနှင့် အပြည်ပြည်ဆိုင်ရာချန်နယ်များကိုကြည့်ရှုနိုင်သည် — သတင်း၊ အားကစား၊ ပျော်ပျော်စရာ၊ ကာတွန်းနှင့်ရုပ်ရှင်များ\n\n✨ အင်္ဂါရပ်များ:\n• HD & Full HD ဗွီဒီယိုများ\n• အမြန် load & buffer free\n• One-click access, no login/subscription needed\n• Popular local & international channels\n• Live events & sports coverage\n• Multi-device support (mobile, tablet, desktop, smart TV)\n• User-friendly interface, easy navigation\n• Regularly updated channel list`},
-es:{tag:"TV en vivo",cta:`🎥 ¡Transmisión HD en un clic!\nMira canales locales e internacionales — noticias, deportes, entretenimiento, dibujos animados y películas en una sola plataforma.\n\n✨ Características:\n• Streams de video HD & Full HD\n• Carga rápida y sin buffering\n• Acceso con un clic, sin login/suscripción\n• Canales locales e internacionales populares\n• Eventos en vivo y cobertura deportiva\n• Soporte multi-dispositivo (móvil, tablet, desktop, smart TV)\n• Interfaz amigable, navegación sencilla\n• Lista de canales actualizada regularmente`},
-zh:{tag:"直播电视",cta:`🎥 一键观看HD直播！\n观看本地和国际频道 — 新闻、体育、娱乐、动画和电影，一站式平台。\n\n✨ 功能:\n• HD和Full HD视频流\n• 快速加载 & 无缓冲\n• 一键访问，无需登录/订阅\n• 本地和国际热门频道\n• 直播活动和体育赛事\n• 多设备支持（手机、平板、桌面、智能电视）\n• 用户友好界面，轻松导航\n• 定期更新频道列表`}
+bn:{tag:"লাইভ টিভির ঘর",pitch:`🎥 <strong>HD লাইভ স্ট্রিম এক ক্লিকে!</strong>\nদেখুন বাংলাদেশি ও আন্তর্জাতিক চ্যানেল — খবর, খেলা, বিনোদন, কার্টুন ও মুভি, সব এক প্ল্যাটফর্মে।`, featHead: "বৈশিষ্ট্যসমূহ", features:[`HD ও Full HD মানের ভিডিও স্ট্রিম`,`দ্রুত লোডিং ও বাফার মুক্ত অভিজ্ঞতা`,`এক ক্লিকে এক্সেস, কোন লগইন বা সাবস্ক্রিপশন প্রয়োজন নেই`,`দেশি ও আন্তর্জাতিক জনপ্রিয় চ্যানেল`,`সরাসরি লাইভ ইভেন্ট এবং খেলার সম্প্রচার`,`মাল্টিপল ডিভাইস সাপোর্ট (মোবাইল, ট্যাব, ডেস্কটপ, স্মার্ট TV)`,`ব্যবহারবান্ধব ইন্টারফেস, সহজ নেভিগেশন`,`নিয়মিত আপডেট হওয়া চ্যানেল তালিকা`]},
+en:{tag:"Home of Live TV",pitch:`🎥 <strong>HD Live stream in one click!</strong>\nWatch Bangladeshi & International channels — news, sports, entertainment, cartoons & movies all in one platform.`, featHead: "Features", features:[`HD & Full HD video streams`,`Fast loading & buffer-free experience`,`One-click access, no login/subscription required`,`Popular local & international channels`,`Live events & sports coverage`,`Multi-device support (mobile, tablet, desktop, smart TV)`,`User-friendly interface, easy navigation`,`Regularly updated channel list`]},
+hi:{tag:"लाइव टीवी का घर",pitch:`🎥 <strong>HD लाइव स्ट्रीम एक क्लिक में!</strong>\nदेखें भारतीय और अंतर्राष्ट्रीय चैनल — समाचार, खेल, मनोरंजन, कार्टून और फ़िल्में, सब एक प्लेटफ़ॉर्म पर।`, featHead: "विशेषताएँ", features:[`HD और Full HD वीडियो स्ट्रीम`,`तेज़ लोडिंग और बफ़र मुक्त अनुभव`,`एक क्लिक में एक्सेस, कोई लॉगिन/सदस्यता नहीं`,`देशी और अंतर्राष्ट्रीय लोकप्रिय चैनल`,`लाइव इवेंट और खेल कवरेज`,`मल्टी-डिवाइस सपोर्ट (मोबाइल, टैबलेट, डेस्कटॉप, स्मार्ट टीवी)`,`उपयोगकर्ता के अनुकूल इंटरफ़ेस, आसान नेविगेशन`,`नियमित अपडेटेड चैनल सूची`]},
+ur:{tag:"لائیو ٹی وی کا گھر",pitch:`🎥 <strong>HD لائیو سٹریمنگ ایک کلک میں!</strong>\nدیکھیں پاکستانی اور بین الاقوامی چینلز — خبریں، کھیل، تفریح، کارٹون اور فلمیں، سب ایک پلیٹ فارم پر۔`, featHead: "خصوصیات", features:[`HD اور Full HD ویڈیو اسٹریم`,`تیز رفتار لوڈنگ اور بغیر بفر تجربہ`,`ایک کلک میں رسائی، کوئی لاگ ان / سبسکرپشن نہیں`,`مقامی اور بین الاقوامی مشہور چینلز`,`براہ راست ایونٹس اور کھیل کی نشریات`,`متعدد ڈیوائس سپورٹ (موبائل، ٹیبلٹ، ڈیسک ٹاپ، اسمارٹ ٹی وی)`,`صارف دوست انٹرفیس، آسان نیویگیشن`,`باقاعدگی سے اپ ڈیٹ ہونے والی چینلز کی فہرست`]},
+ar:{tag:"بيت البث المباشر",pitch:`🎥 <strong>شاهد البث المباشر بجودة HD بنقرة واحدة!</strong>\nاستمتع بالقنوات المحلية والدولية — أخبار، رياضة، ترفيه، رسوم متحركة وأفلام على منصة واحدة.`, featHead: "الميزات", features:[`بث فيديو HD و Full HD`,`تحميل سريع وتجربة بدون توقف`,`وصول بنقرة واحدة، بدون تسجيل أو اشتراك`,`القنوات المحلية والدولية الشهيرة`,`الأحداث الرياضية والبث المباشر`,`دعم متعدد الأجهزة (الهاتف، التابلت، الكمبيوتر، التلفاز الذكي)`,`واجهة سهلة الاستخدام، تنقل بسيط`,`قائمة القنوات محدثة باستمرار`]},
+sw:{tag:"Nyumba ya TV Moja kwa Moja",pitch:`🎥 <strong>HD Live stream kwa click moja!</strong>\nTazama channels za ndani na kimataifa — habari, michezo, burudani, katuni & filamu zote kwenye jukwaa moja.`, featHead: "Vipengele", features:[`HD & Full HD video streams`,`Haraka kupakia & bila buffering experience`,`One-click access, hakuna login/subscribe`,`Popular local & international channels`,`Live events & sports coverage`,`Multi-device support (simu, tablet, desktop, smart TV)`,`User-friendly interface, easy navigation`,`Regularly updated channel list`]},
+id:{tag:"Rumah TV Langsung",pitch:`🎥 <strong>Streaming HD dengan satu klik!</strong>\nTonton saluran lokal & internasional — berita, olahraga, hiburan, kartun & film di satu platform.`, featHead: "Fitur", features:[`HD & Full HD video streams`,`Cepat loading & bebas buffer experience`,`One-click access, tanpa login/subscription`,`Saluran lokal & internasional populer`,`Live events & sports coverage`,`Multi-device support (mobile, tablet, desktop, smart TV)`,`User-friendly interface, easy navigation`,`Regularly updated channel list`]},
+si:{tag:"සජීවී ටීවී",pitch:`🎥 <strong>HD සජීවී ප්‍රවහනය එක් ක්ලික් එකකින්!</strong>\nදෙසිය සහ ජාත්‍යන්තර නාලිකා බලන්න — පුවත්, ක්‍රීඩා, විනෝදය, කාටූන් සහ චිත්‍රපට සියල්ල එකම වේදිකාවේ.`, featHead: "විශේෂාංග", features:[`HD සහ Full HD වීඩියෝ ප්‍රවහන`,`වේගවත් ලෝඩ් කිරීම සහ බෆර් රහිත අත්දැකීම`,`එක් ක්ලික් ප්‍රවේශය, ලොගින් / සබ්ස්ක්‍රිප්ශන් අවශ්‍ය නැත`,`ජනප්‍රිය දේශීය සහ ජාත්‍යන්තර නාලිකා`,`සජීවී අවස්ථා සහ ක්‍රීඩා සවිකිරීම`,`බහු-ඉන්ධන සහාය (මොබයිල්, ටැබ්ලට්, ඩෙස්ක්ටොප්, ස්මාර්ට් TV)`,`භාවිතයට පහසු අතුරුමුහුණත්, පහසු නැවිගේශන්`,`නිතර යාවත්කාලීන කරන නාලිකා ලැයිස්තුව`]},
+ru:{tag:"Дом живого ТВ",pitch:`🎥 <strong>HD потоковое вещание в один клик!</strong>\nСмотрите местные и международные каналы — новости, спорт, развлечения, мультфильмы и фильмы на одной платформе.`, featHead: "Особенности", features:[`HD & Full HD видео потоки`,`Быстрая загрузка & без буферизации`,`Доступ в один клик, без логина/подписки`,`Популярные местные и международные каналы`,`Прямые трансляции событий и спортивные трансляции`,`Поддержка нескольких устройств (мобильные, планшеты, ПК, смарт ТВ)`,`Удобный интерфейс, простая навигация`,`Регулярно обновляемый список каналов`]},
+ne:{tag:"प्रत्यक्ष टिभीको घर",pitch:`🎥 <strong>HD प्रत्यक्ष स्ट्रिम एक क्लिकमा!</strong>\nस्थानीय र अन्तर्राष्ट्रिय च्यानलहरू हेर्नुहोस् — समाचार, खेलकुद, मनोरञ्जन, कार्टुन र चलचित्र सबै एउटै प्लेटफर्ममा।`, featHead: "सुविधाहरू", features:[`HD & Full HD भिडियो स्ट्रिम`,`छिटो लोडिङ & बफर-मुक्त अनुभव`,`एक क्लिक पहुँच, कुनै लगइन/सब्सक्रिप्शन आवश्यक छैन`,`लोकप्रिय स्थानीय & अन्तर्राष्ट्रिय च्यानलहरू`,`प्रत्यक्ष कार्यक्रम र खेल प्रसारण`,`बहु-उपकरण समर्थन (मोबाइल, ट्याब्लेट, डेस्कटप, स्मार्ट TV)`,`प्रयोगकर्ता मैत्री इन्टरफेस, सजिलो नेभिगेसन`,`नियमित रूपमा अपडेट गरिएको च्यानल सूची`]},
+my:{tag:"မြန်မာ (Burmese) TV",pitch:`🎥 <strong>HD Live Stream တစ်ချက်နှိပ်ပြီး!</strong>\nဒေသတွင်းနှင့် အပြည်ပြည်ဆိုင်ရာချန်နယ်များကိုကြည့်ရှုနိုင်သည် — သတင်း၊ အားကစား၊ ပျော်ပျော်စရာ၊ ကာတွန်းနှင့်ရုပ်ရှင်များ`, featHead: "အင်္ဂါရပ်များ", features:[`HD & Full HD ဗွီဒီယိုများ`,`အမြန် load & buffer free experience`,`One-click access, no login/subscription needed`,`Popular local & international channels`,`Live events & sports coverage`,`Multi-device support (mobile, tablet, desktop, smart TV)`,`User-friendly interface, easy navigation`,`Regularly updated channel list`]},
+es:{tag:"TV en vivo",pitch:`🎥 <strong>¡Transmisión HD en un clic!</strong>\nMira canales locales e internacionales — noticias, deportes, entretenimiento, dibujos animados y películas en una sola plataforma.`, featHead: "Características", features:[`Streams de video HD & Full HD`,`Carga rápida y sin buffering`,`Acceso con un clic, sin login/suscripción`,`Canales locales e internacionales populares`,`Eventos en vivo y cobertura deportiva`,`Soporte multi-dispositivo (móvil, tablet, desktop, smart TV)`,`Interfaz amigable, navegación sencilla`,`Lista de canales actualizada regularmente`]},
+zh:{tag:"直播电视",pitch:`🎥 <strong>一键观看HD直播！</strong>\n观看本地和国际频道 — 新闻、体育、娱乐、动画和电影，一站式平台。`, featHead: "功能", features:[`HD和Full HD视频流`,`快速加载 & 无缓冲体验`,`一键访问，无需登录/订阅`,`本地和国际热门频道`,`直播活动和体育赛事`,`多设备支持（手机、平板、桌面、智能电视）`,`用户友好界面，轻松导航`,`定期更新频道列表`]}
 };
 
 const select=document.getElementById("languageSelect");
 const tagline=document.getElementById("tagline");
 const ctaText=document.getElementById("ctaText");
+const featureHeading = document.getElementById("featureHeading");
+const featureList = document.getElementById("featureList");
 
 function updateLanguage(lang){
-  tagline.textContent=texts[lang].tag;
-  ctaText.innerHTML=texts[lang].cta.replace(/\n/g,"<br>");
+  const data = texts[lang];
+  tagline.textContent = data.tag;
+
+  // Update Pitch text
+  const pitchParts = data.pitch.split('\n');
+  let newPitchHTML = `<p class="main-pitch">${pitchParts[0]}</p>`;
+  if(pitchParts.length > 1) {
+    newPitchHTML += `<p>${pitchParts[1]}</p>`;
+  }
+  
+  // Update Feature Heading
+  featureHeading.textContent = data.featHead;
+
+  // Update Feature List
+  featureList.innerHTML = data.features.map(f => `<li>${f}</li>`).join('');
+
+  // Combine pitch and features for ctaText container
+  ctaText.innerHTML = newPitchHTML + featureHeading.outerHTML.replace('style="display: none;"', '') + featureList.outerHTML;
+
+
   if(["ar","ur"].includes(lang)){
     document.body.setAttribute("dir","rtl");
   }else{
@@ -116,8 +297,15 @@ select.addEventListener("change",(e)=>{
 // Optional: auto-detect browser language
 const userLang=navigator.language||navigator.userLanguage;
 const langCode=userLang.slice(0,2);
-if(texts[langCode]) updateLanguage(langCode);
+if(texts[langCode]){
+    select.value = langCode; // Set the selector value
+    updateLanguage(langCode); // Update content
+} else {
+    // Ensure default (bn) is loaded if auto-detect fails or isn't a supported language
+    updateLanguage(select.value);
+}
 
 </script>
 </body>
 </html>
+html
