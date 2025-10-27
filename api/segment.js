@@ -1,34 +1,50 @@
 // api/segment.js
 export default async function handler(req, res) {
-  const u = req.query.u;
-  if (!u) {
-    res.status(400).send("Missing url");
-    return;
+  const { url } = req.query;
+
+  if (!url) {
+    return res.status(400).send('Missing segment URL');
   }
-  const original = decodeURIComponent(u);
+
+  // ডিকোড করুন
+  let decodedUrl;
+  try {
+    decodedUrl = decodeURIComponent(url);
+  } catch (e) {
+    return res.status(400).send('Invalid URL');
+  }
+
+  // শুধু নির্দিষ্ট ডোমেইন থেকে অনুমতি দিন (সিকিউরিটি)
+  const allowedDomains = [
+    'live20.bozztv.com',
+    'srknowapp.ncare.live',
+    'd2vnbkvjbims7j.cloudfront.net'
+  ];
+  const urlObj = new URL(decodedUrl);
+  if (!allowedDomains.some(d => urlObj.hostname.includes(d))) {
+    return res.status(403).send('Domain not allowed');
+  }
 
   try {
-    // Optional: forward certain headers (like Referer or User-Agent) if origin server needs them.
-    const fetchOptions = {
-      // headers: { 'Referer': 'https://your-site.vercel.app/' } // uncomment if needed
-    };
+    const response = await fetch(decodedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (HLS Segment Proxy)',
+        'Referer': 'https://srk-hls-proxy.vercel.app/'
+      }
+    });
 
-    const fetched = await fetch(original, fetchOptions);
-    if (!fetched.ok) {
-      res.status(502).send("Bad gateway fetching segment");
-      return;
+    if (!response.ok) {
+      return res.status(404).send('Segment not found');
     }
 
-    // Forward content-type if present
-    const contentType = fetched.headers.get('content-type') || 'application/octet-stream';
-    res.setHeader("Content-Type", contentType);
+    const contentType = response.headers.get('content-type') || 'video/MP2T';
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Cache-Control', 'public, max-age=86400');
 
-    // stream the content as buffer
-    const arrayBuffer = await fetched.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    res.status(200).send(buffer);
+    const buffer = await response.arrayBuffer();
+    res.send(Buffer.from(buffer));
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
+    console.error('Segment proxy error:', err);
+    res.status(500).send('Segment fetch failed');
   }
 }
