@@ -23,9 +23,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
-      padding: 1.2rem;
+      padding: 0.8rem 1rem 1.5rem;
     }
 
     @keyframes bgMove {
@@ -34,14 +34,33 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* 🔝 হেডার টেক্সট */
+    .top-link {
+      font-size: 1.05rem;
+      color: #00b34a;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 1px;
+      margin-top: 0.6rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      display: inline-block;
+      transition: color 0.3s ease;
+    }
+
+    .top-link:hover {
+      color: #009d3e;
+      text-decoration: underline;
+    }
+
     .hero {
       text-align: center;
-      max-width: 500px;
+      max-width: 480px;
       background: rgba(255, 255, 255, 0.9);
-      padding: 1.8rem 1.3rem;
-      border-radius: 20px;
+      padding: 1.4rem 1rem;
+      border-radius: 18px;
       border: 1px solid rgba(0, 200, 83, 0.3);
-      box-shadow: 0 6px 25px rgba(0, 200, 83, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 200, 83, 0.1);
       backdrop-filter: blur(8px);
       position: relative;
       overflow: hidden;
@@ -51,11 +70,11 @@
       content: "";
       position: absolute;
       inset: 0;
-      border-radius: 20px;
+      border-radius: 18px;
       padding: 1.5px;
       background: linear-gradient(90deg, #00e676, #00c853, #64dd17, #aee571);
       background-size: 400% 400%;
-      animation: glowBorder 7s linear infinite;
+      animation: glowBorder 8s linear infinite;
       mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       mask-composite: exclude;
       -webkit-mask-composite: destination-out;
@@ -68,20 +87,12 @@
     }
 
     .logo-img {
-      width: 90px;
-      height: 90px;
+      width: 85px;
+      height: 85px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-      animation: spinGlow 6s linear infinite;
-    }
-
-    /* 🌟 লোগো স্পিন ও গ্লো অ্যানিমেশন */
-    @keyframes spinGlow {
-      0% { transform: rotate(0deg); box-shadow: 0 0 12px rgba(0, 200, 83, 0.3); }
-      50% { transform: rotate(180deg); box-shadow: 0 0 25px rgba(0, 200, 83, 0.6); }
-      100% { transform: rotate(360deg); box-shadow: 0 0 12px rgba(0, 200, 83, 0.3); }
     }
 
     .logo {
@@ -90,79 +101,79 @@
       background: linear-gradient(90deg, #00c853, #64dd17);
       -webkit-background-clip: text;
       color: transparent;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
       animation: textGlow 3s ease-in-out infinite alternate;
     }
 
     @keyframes textGlow {
       from { text-shadow: 0 0 6px rgba(0, 200, 83, 0.4); }
-      to { text-shadow: 0 0 16px rgba(0, 230, 118, 0.8); }
+      to { text-shadow: 0 0 14px rgba(0, 230, 118, 0.7); }
     }
 
     .tagline {
       font-size: 1rem;
       color: #444;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
     }
 
     .cta-box {
       background: #f4fff6;
       border: 1px solid #00c853;
-      border-radius: 15px;
-      padding: 1.3rem;
-      box-shadow: 0 4px 18px rgba(0, 200, 83, 0.1);
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.1);
     }
 
     .cta-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #222;
-      margin-bottom: 1.2rem;
-      line-height: 1.6;
+      margin-bottom: 1rem;
+      line-height: 1.5;
     }
 
-    /* 💚 বোতামের নিয়ন গ্লো অ্যানিমেশন */
     .cta-link {
       display: inline-block;
       background: linear-gradient(90deg, #00c853, #64dd17);
       color: #fff;
       font-weight: 600;
       text-decoration: none;
-      padding: 10px 28px;
+      padding: 10px 26px;
       border-radius: 40px;
       font-size: 1rem;
       transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 200, 83, 0.6);
-      position: relative;
+      box-shadow: 0 0 15px rgba(0, 200, 83, 0.5);
       animation: pulseGlow 2.8s infinite ease-in-out;
     }
 
     @keyframes pulseGlow {
-      0% { box-shadow: 0 0 12px rgba(0, 200, 83, 0.5); transform: scale(1); }
-      50% { box-shadow: 0 0 22px rgba(0, 230, 118, 0.8); transform: scale(1.05); }
-      100% { box-shadow: 0 0 12px rgba(0, 200, 83, 0.5); transform: scale(1); }
+      0% { box-shadow: 0 0 10px rgba(0, 200, 83, 0.4); transform: scale(1); }
+      50% { box-shadow: 0 0 22px rgba(0, 230, 118, 0.8); transform: scale(1.04); }
+      100% { box-shadow: 0 0 10px rgba(0, 200, 83, 0.4); transform: scale(1); }
     }
 
     .cta-link:hover {
       background: linear-gradient(90deg, #00e676, #9cff57);
-      transform: translateY(-2px) scale(1.07);
+      transform: translateY(-2px) scale(1.05);
     }
 
     .footer {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       text-align: center;
       color: #555;
       font-size: 0.85rem;
     }
 
     @media (max-width: 480px) {
-      .hero { padding: 1.3rem; }
+      .hero { padding: 1rem; }
       .logo { font-size: 1.8rem; }
-      .cta-title { font-size: 0.95rem; }
-      .logo-img { width: 80px; height: 80px; }
+      .cta-title { font-size: 0.9rem; }
+      .logo-img { width: 75px; height: 75px; }
     }
   </style>
 </head>
 <body>
+  <a href="https://hridoytv.vercel.app" class="top-link" target="_blank">HRIDOYTV.VERCEL.APP</a>
+
   <div class="hero">
     <img src="https://i.ibb.co.com/YCvJrrT/In-Shot-20251015-113151893.jpg" alt="HridoyTV Logo" class="logo-img">
     <h1 class="logo">HridoyTV</h1>
