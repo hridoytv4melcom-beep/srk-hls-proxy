@@ -1,28 +1,27 @@
-// api/segment.js
 export default async function handler(req, res) {
   const { url } = req.query;
 
   if (!url) {
-    return res.status(400).send('Missing segment URL');
+    return res.status(400).send('❌ Missing segment URL');
   }
 
-  // ডিকোড করুন
+  // ডিকোড করা URL
   let decodedUrl;
   try {
     decodedUrl = decodeURIComponent(url);
   } catch (e) {
-    return res.status(400).send('Invalid URL');
+    return res.status(400).send('❌ Invalid URL');
   }
 
-  // শুধু নির্দিষ্ট ডোমেইন থেকে অনুমতি দিন (সিকিউরিটি)
+  // শুধুমাত্র অনুমোদিত ডোমেইন
   const allowedDomains = [
     'live20.bozztv.com',
     'srknowapp.ncare.live',
-    'd2vnbkvjbims7j.cloudfront.net'
+    'hridoytv.4mel.com'
   ];
   const urlObj = new URL(decodedUrl);
   if (!allowedDomains.some(d => urlObj.hostname.includes(d))) {
-    return res.status(403).send('Domain not allowed');
+    return res.status(403).send('❌ Domain not allowed');
   }
 
   try {
@@ -34,9 +33,10 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-      return res.status(404).send('Segment not found');
+      return res.status(404).send('❌ Segment not found');
     }
 
+    // Content-Type সেট করা
     const contentType = response.headers.get('content-type') || 'video/MP2T';
     res.setHeader('Content-Type', contentType);
     res.setHeader('Cache-Control', 'public, max-age=86400');
@@ -45,6 +45,6 @@ export default async function handler(req, res) {
     res.send(Buffer.from(buffer));
   } catch (err) {
     console.error('Segment proxy error:', err);
-    res.status(500).send('Segment fetch failed');
+    res.status(500).send('❌ Segment fetch failed');
   }
 }
