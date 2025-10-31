@@ -1,31 +1,15 @@
+import Redis from 'ioredis';
+const redis = new Redis(process.env.REDIS_URL);
+
 export default async function handler(req, res) {
-  const { url } = req.query;
-
-  if (!url) {
-    return res.status(400).send('❌ Missing segment URL');
-  }
-
-  // URL decode
-  let decodedUrl;
-  try {
-    decodedUrl = decodeURIComponent(url);
-  } catch (e) {
-    return res.status(400).send('❌ Invalid URL');
-  }
-
-  // ✅ অনুমোদিত ডোমেইন
-  const allowedDomains = [
-    'live20.bozztv.com',
-    'srknowapp.ncare.live',
-    'd2vnbkvjbims7j.cloudfront.net'
-  ];
-  const urlObj = new URL(decodedUrl);
-  if (!allowedDomains.some(d => urlObj.hostname.includes(d))) {
-    return res.status(403).send('❌ Domain not allowed');
-  }
+  const { seg } = req.query;
+  if (!seg) return res.status(400).send('❌ Missing segment ID');
 
   try {
-    const response = await fetch(decodedUrl, {
+    const url = await redis.get(`segment:${seg}`);
+    if (!url) return res.status(404).send('❌ Segment not found');
+
+    const response = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (HLS Segment Proxy)',
         'Referer': 'https://srk-hls-proxy.vercel.app/',
@@ -34,9 +18,7 @@ export default async function handler(req, res) {
       }
     });
 
-    if (!response.ok) {
-      return res.status(404).send('❌ Segment not found');
-    }
+    if (!response.ok) return res.status(404).send('❌ Segment fetch failed');
 
     const contentType = response.headers.get('content-type') || 'video/MP2T';
     res.setHeader('Content-Type', contentType);
@@ -44,8 +26,9 @@ export default async function handler(req, res) {
 
     const buffer = await response.arrayBuffer();
     res.send(Buffer.from(buffer));
+
   } catch (err) {
-    console.error('Segment proxy error:', err);
+    console.error('segment.js error:', err);
     res.status(500).send('❌ Segment fetch failed');
   }
 }
