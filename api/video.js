@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Preflight request হ্যান্ডেল
+  // Preflight request
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -33,7 +33,9 @@ export default async function handler(req, res) {
     const response = await fetch(upstreamUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (HLS Proxy)',
-        'Referer': 'https://srk-hls-proxy.vercel.app/'
+        'Referer': 'https://srk-hls-proxy.vercel.app/',
+        'Origin': 'https://srk-hls-proxy.vercel.app',
+        'Accept': '*/*'
       }
     });
 
@@ -44,12 +46,12 @@ export default async function handler(req, res) {
 
     let m3u8Text = await response.text();
 
-    // Base URL বের করা (relative লিংক ঠিক করতে)
+    // Base URL (relative link ঠিক করার জন্য)
     const baseUrl = new URL(upstreamUrl).origin + new URL(upstreamUrl).pathname.replace(/[^/]*$/, '');
 
-    // ✅ সমস্ত সেগমেন্ট লিংক /api/segment দিয়ে রিওয়াইট
+    // ✅ সমস্ত segment লিংক /api/segment দিয়ে রিওয়াইট
     m3u8Text = m3u8Text.replace(
-      /(?<!https?:\/\/)([^"\n\r]+?\.(?:ts|m4s|mp4|aac|vtt))(?![^"\n\r]*?https?:\/\/)/g,
+      /(?<!https?:\/\/)([^"\n\r]+?\.(?:ts|m4s|mp4|aac|vtt))/g,
       (match) => {
         const absoluteUrl = new URL(match, baseUrl).href;
         return `/api/segment?url=${encodeURIComponent(absoluteUrl)}`;
