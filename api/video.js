@@ -1,11 +1,10 @@
-// api/video.js
 export default async function handler(req, res) {
-  // ✅ CORS হেডার (অন্য সাইট থেকে এম্বেড করার জন্য অপরিহার্য)
+  // ✅ CORS হেডার
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Preflight request হ্যান্ডেল করুন
+  // Preflight request হ্যান্ডেল
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -14,10 +13,10 @@ export default async function handler(req, res) {
   const { channel } = req.query;
 
   if (!channel) {
-    return res.status(400).send('Missing channel parameter');
+    return res.status(400).send('❌ Missing channel parameter');
   }
 
-  // ✅ চ্যানেল ম্যাপিং — আপনার দেওয়া m3u8 লিংকগুলো
+  // ✅ চ্যানেল ম্যাপিং
   const channelMap = {
     sony_aath: 'https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8',
     srk_tv3330: 'https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8',
@@ -26,11 +25,11 @@ export default async function handler(req, res) {
 
   const upstreamUrl = channelMap[channel];
   if (!upstreamUrl) {
-    return res.status(404).send('Channel not found');
+    return res.status(404).send('❌ Channel not found');
   }
 
   try {
-    // ✅ আপস্ট্রিম m3u8 ফেচ করুন
+    // ✅ আপস্ট্রিম m3u8 ফেচ
     const response = await fetch(upstreamUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (HLS Proxy)',
@@ -40,13 +39,15 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       console.error(`Upstream error for ${channel}:`, response.status, response.statusText);
-      return res.status(502).send('Failed to fetch stream');
+      return res.status(502).send('❌ Failed to fetch stream');
     }
 
     let m3u8Text = await response.text();
 
-    // ✅ m3u8-এর ভিতরে থাকা সেগমেন্ট পাথগুলোকে /api/segment এ রিওয়াইট করুন
+    // Base URL বের করা (relative লিংক ঠিক করতে)
     const baseUrl = new URL(upstreamUrl).origin + new URL(upstreamUrl).pathname.replace(/[^/]*$/, '');
+
+    // ✅ সমস্ত সেগমেন্ট লিংক /api/segment দিয়ে রিওয়াইট
     m3u8Text = m3u8Text.replace(
       /(?<!https?:\/\/)([^"\n\r]+?\.(?:ts|m4s|mp4|aac|vtt))(?![^"\n\r]*?https?:\/\/)/g,
       (match) => {
@@ -55,12 +56,12 @@ export default async function handler(req, res) {
       }
     );
 
-    // ✅ সঠিক কন্টেন্ট-টাইপ + ক্যাশে না করা
+    // ✅ Content-Type + Cache-Control
     res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.status(200).send(m3u8Text);
   } catch (err) {
     console.error('video.js error:', err.message);
-    res.status(500).send('Internal proxy error');
+    res.status(500).send('❌ Internal proxy error');
   }
 }
