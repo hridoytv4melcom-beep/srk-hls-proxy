@@ -1,34 +1,48 @@
-import Redis from 'ioredis';
-const redis = new Redis(process.env.REDIS_URL);
+// api/segment.js
+import fetch from "node-fetch";
+import LRU from "lru-cache";
+
+const cache =
+  global.__SEG_MAP ||
+  new LRU({
+    max: 5000,
+    ttl: 60 * 1000,
+  });
+global.__SEG_MAP = cache;
+
+function copySafeHeaders(originHeaders, res) {
+  const allowed = [
+    "content-type",
+    "content-length",
+    "content-range",
+    "accept-ranges",
+    "etag",
+    "last-modified",
+  ];
+  allowed.forEach((k) => {
+    const v = originHeaders.get(k);
+    if (v) res.setHeader(k, v);
+  });
+  res.setHeader("Cache-Control", "no-store, must-revalidate");
+}
 
 export default async function handler(req, res) {
-  const { seg } = req.query;
-  if (!seg) return res.status(400).send('❌ Missing segment ID');
+  const { id } = req.query;
+  if (!id) return res.status(400).send("Missing id");
 
-  try {
-    const url = await redis.get(`segment:${seg}`);
-    if (!url) return res.status(404).send('❌ Segment not found');
+  const segUrl = cache.get(id);
+  if (!segUrl) return res.status(404).send("Segment expired or invalid");
 
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (HLS Segment Proxy)',
-        'Referer': 'https://srk-hls-proxy.vercel.app/',
-        'Origin': 'https://srk-hls-proxy.vercel.app',
-        'Accept': '*/*'
-      }
-    });
+  const response = await fetch(segUrl);
+  if (!response.ok) return res.status(502).send("Failed to fetch segment");
 
-    if (!response.ok) return res.status(404).send('❌ Segment fetch failed');
+  copySafeHeaders(response.headers, res);
 
-    const contentType = response.headers.get('content-type') || 'video/MP2T';
-    res.setHeader('Content-Type', contentType);
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-
-    const buffer = await response.arrayBuffer();
-    res.send(Buffer.from(buffer));
-
-  } catch (err) {
-    console.error('segment.js error:', err);
-    res.status(500).send('❌ Segment fetch failed');
+  const body = response.body;
+  if (body) {
+    body.pipe(res);
+  } else {
+    const buf = await response.buffer();
+    res.end(buf);
   }
 }
